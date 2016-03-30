@@ -16,13 +16,13 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty(message = "{err.field.name.required}")
-    @Column(name = "name")
-    private String name;
+    @NotEmpty(message = "{err.field.first.name.required}")
+    @Column(name = "first_name")
+    private String firstName;
 
-    @NotEmpty(message = "{err.field.surname.required}")
-    @Column(name = "surname")
-    private String surname;
+    @NotEmpty(message = "{err.field.last.name.required}")
+    @Column(name = "last_name")
+    private String lastName;
 
     @Email(message = "{err.field.email.invalid}")
     @NotEmpty(message = "{err.field.email.required}")
@@ -35,9 +35,9 @@ public class User {
 
     public User(){}
 
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
@@ -50,20 +50,20 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -86,8 +86,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

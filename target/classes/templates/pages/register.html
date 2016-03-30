@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:with="currentPage='register'">
     <head lang="en">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Registration</title>
@@ -13,16 +13,28 @@
             <div class="card card-container">
                 <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
                 <p id="profile-name" class="profile-name-card"></p>
-                <form class="form-signin" action="#" th:action="@{/register}" th:object="${user}">
+                <form class="form-signin" action="#" th:action="@{/register}" th:object="${user}"  method="post">
                     <span id="reauth-email" class="reauth-email"></span>
-                    <input type="text" id="inputName" class="form-control" th:field="*{firstName}" th:placeholder="#{label.first.name}" />
-                    <input type="text" id="inputSurname" class="form-control" placeholder="Surname" />
-                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" />
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" />
-                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+
+                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="field-error"></div>
+                    <input type="text" class="form-control" th:field="*{firstName}" th:placeholder="#{label.first.name}" />
+
+                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="field-error"></div>
+                    <input type="text" class="form-control" th:field="*{lastName}" th:placeholder="#{label.last.name}" />
+
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="field-error"></div>
+                    <input type="text" th:field="*{email}" th:placeholder="#{label.email}" class="form-control" />
+
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></div>
+                    <input type="password" th:field="*{password}" th:placeholder="#{label.password}" class="form-control" />
+
+                    <input type="password" name="confirmPassword" class="form-control" th:placeholder="#{label.confirm.password}" />
+
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" th:text="#{btn.register}">register</button>
                 </form><!-- /form -->
-                <a href="#" class="forgot-password">
-                    Forgot the password?
+
+                <a th:href="@{/login}" class="forgot-password">
+                    login
                 </a>
             </div><!-- /card-container -->
         </div><!-- /container -->
