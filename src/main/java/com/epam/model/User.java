@@ -1,5 +1,9 @@
 package com.epam.model;
 
+import com.epam.model.converter.UserProfileConverter;
+import com.epam.model.converter.UserStatusConverter;
+import com.epam.model.lcp.UserProfile;
+import com.epam.model.lcp.UserStatus;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -16,6 +20,14 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "user_status")
+    @Convert(converter = UserStatusConverter.class)
+    private UserStatus status;
+
+    @Column(name = "user_profile")
+    @Convert(converter = UserProfileConverter.class)
+    private UserProfile profile;
+
     @NotEmpty(message = "{err.field.first.name.required}")
     @Column(name = "first_name")
     private String firstName;
@@ -29,17 +41,19 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "{err.field.password.required}")
     @Column(name = "password")
     private String password;
 
     public User(){}
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+    public User(User user) {
+        this.id = user.id;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.password = user.password;
+        this.status = user.status;
+        this.profile = user.profile;
     }
 
     public Long getId() {
@@ -82,14 +96,20 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public UserStatus getStatus() {
+        return status;
     }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+    }
+
 }
