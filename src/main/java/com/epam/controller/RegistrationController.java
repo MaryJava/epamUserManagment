@@ -1,8 +1,9 @@
 package com.epam.controller;
 
-import com.epam.exception.DatabaseException;
+import com.epam.controller.util.UserValidator;
 import com.epam.model.User;
-import com.epam.repository.UserRepository;
+import com.epam.model.lcp.UserProfile;
+import com.epam.model.lcp.UserStatus;
 import com.epam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -27,10 +28,13 @@ public class RegistrationController {
 
     private MessageSource messageSource;
 
+//    private UserValidator validator;
+
     @Autowired
-    RegistrationController(UserService userService, MessageSource messageSource) {
+    RegistrationController(UserService userService, MessageSource messageSource, UserValidator validator) {
         this.userService = userService;
         this.messageSource = messageSource;
+//        this.validator = validator;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -43,6 +47,7 @@ public class RegistrationController {
                            @Valid User user,
                            BindingResult result) {
 
+//        validator.validate(user, result);
 
         if(result.hasErrors()) {
             return "pages/register";
@@ -68,6 +73,9 @@ public class RegistrationController {
             result.addError(new FieldError("user", "email", message));
             return "pages/register";
         }
+
+        user.setStatus(UserStatus.ACTIVE);
+        user.setProfile(UserProfile.USER);
 
         // storing user's data
         userService.add(user);

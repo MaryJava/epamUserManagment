@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by Sahak_Babayan on 3/31/2016.
@@ -21,7 +22,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Import(DataConfig.class)
+@EnableTransactionManagement
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**

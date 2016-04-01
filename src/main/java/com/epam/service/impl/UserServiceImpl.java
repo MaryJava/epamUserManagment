@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false, rollbackFor = InternalServerException.class)
+    @Transactional(readOnly = false, rollbackFor = InternalServerException.class, propagation = Propagation.REQUIRES_NEW)
     public void add(User user) throws InternalServerException {
         try {
             // encrypts user's password
@@ -44,9 +45,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /**
-     * retrieve user's data to complete authentication
-     */
     @Override
     public UserDetails loadUserByUsername(String email)
             throws InternalServerException {
@@ -72,12 +70,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isEmailExist(String email) throws InternalServerException {
-        return false;
+        try {
+            return userDao.isEmailExist(email);
+        } catch (DatabaseException e) {
+            throw new InternalServerException(e);
+        }
     }
 
     @Override
     public boolean isEmailExist(String email, Long excludedUserID) throws InternalServerException {
-        return false;
+        try {
+            return userDao.isEmailExist(email, excludedUserID);
+        } catch (DatabaseException e) {
+            throw new InternalServerException(e);
+        }
     }
 
     @Override
@@ -96,11 +102,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = InternalServerException.class, propagation = Propagation.REQUIRES_NEW)
     public void edit(User user) throws InternalServerException {
 
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = InternalServerException.class, propagation = Propagation.REQUIRES_NEW)
     public void removeByID(long id) throws InternalServerException {
 
     }

@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Created by Sahak_Babayan on 3/29/2016.
@@ -41,6 +42,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @NotEmpty(message = "{err.field.password.required}")
     @Column(name = "password")
     private String password;
 
