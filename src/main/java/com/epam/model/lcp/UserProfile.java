@@ -1,7 +1,7 @@
 package com.epam.model.lcp;
 
 /**
- * Created by garik on 2/21/16.
+ * Created by Sahak on 2/21/16.
  */
 public enum UserProfile {
 

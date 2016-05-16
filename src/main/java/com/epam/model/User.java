@@ -14,27 +14,27 @@ import javax.validation.constraints.Size;
  * Created by Sahak_Babayan on 3/29/2016.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "`user`")
 public class User {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(name = "user_status")
+    @Column(name = "status_id")
     @Convert(converter = UserStatusConverter.class)
     private UserStatus status;
 
-    @Column(name = "user_profile")
+    @Column(name = "type_id")
     @Convert(converter = UserProfileConverter.class)
     private UserProfile profile;
 
     @NotEmpty(message = "{err.field.first.name.required}")
-    @Column(name = "first_name")
+    @Column(name = "firstname")
     private String firstName;
 
     @NotEmpty(message = "{err.field.last.name.required}")
-    @Column(name = "last_name")
+    @Column(name = "lastname")
     private String lastName;
 
     @Email(message = "{err.field.email.invalid}")

@@ -1,6 +1,5 @@
 package com.epam.config;
 
-import groovy.transform.CompileStatic;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.context.MessageSource;
